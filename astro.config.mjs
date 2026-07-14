@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-	site: process.env.SITE_URL ?? 'https://epa-development.pages.dev',
+	site: process.env.SITE_URL ?? 'https://epa-development.alsrjs951.workers.dev',
 	integrations: [sitemap()],
 });

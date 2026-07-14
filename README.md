@@ -20,10 +20,10 @@ npm run check
 npm run build
 ```
 
-## Cloudflare Pages
+## Cloudflare Workers
 
 - Build command: `npm run build`
 - Build output directory: `dist`
 - Environment variable: `SITE_URL=https://사용할-도메인`
 
-공개 도메인이 정해지면 `public/robots.txt`의 Sitemap 주소도 함께 변경하세요.
+기본 공개 주소는 `https://epa-development.alsrjs951.workers.dev`입니다. 개인 도메인을 연결하면 `SITE_URL`과 `public/robots.txt`의 Sitemap 주소를 함께 변경하세요.

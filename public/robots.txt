@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://epa-development.pages.dev/sitemap-index.xml
+Sitemap: https://epa-development.alsrjs951.workers.dev/sitemap-index.xml

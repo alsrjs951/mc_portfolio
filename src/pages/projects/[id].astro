@@ -19,17 +19,17 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
     <header class="project-hero">
       <div class="project-hero-grid" aria-hidden="true"></div>
       <div class="container">
-        <a class="back-link" href="/#projects">← 전체 작업물</a>
+        <a class="back-link" href={data.sample ? '/#projects' : '/#real-work'}>← {data.sample ? '설계 예시' : '실제 개발 사례'}</a>
         <div class="project-hero__meta">
           <span class:list={['type-badge', `type-badge--${data.type}`]}>{typeLabel}</span>
-          {data.sample && <span class="sample-badge">실제 콘텐츠로 교체 필요</span>}
+          <span class:list={['case-badge case-badge--detail', { 'case-badge--sample': data.sample }]}>{data.sample ? '설계 예시 · 실제 납품 사례 아님' : '실제 구현 사례'}</span>
         </div>
         <h1>{data.title}</h1>
         <p>{data.summary}</p>
         <div class="project-facts">
-          <div><span>PLATFORM</span><b>{data.serverType}</b></div>
-          <div><span>VERSION</span><b>{data.minecraftVersions.join(', ')}</b></div>
-          <div><span>STACK</span><b>{data.stack.join(' · ')}</b></div>
+          <div><span>서버 환경</span><b>{data.serverType}</b></div>
+          <div><span>지원 버전</span><b>{data.minecraftVersions.join(', ')}</b></div>
+          <div><span>구현 기술</span><b>{data.stack.join(' · ')}</b></div>
         </div>
         {(data.sourceUrl || data.demoUrl) && (
           <div class="project-links">
@@ -42,26 +42,25 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 
     <div class="container project-layout">
       <div class="project-content">
-        <section>
-          <p class="section-kicker">01 · CONTEXT</p>
-          <h2>개발 배경</h2>
-          <p>{data.problem}</p>
+        <section class="project-overview">
+          <p class="section-kicker">01 · 한눈에 이해하기</p>
+          <h2>이 시스템은 무엇을 해결했나요?</h2>
+          <div class="overview-flow">
+            <article><span>서버에서 겪던 문제</span><p>{data.problem}</p></article>
+            <div aria-hidden="true">→</div>
+            <article><span>구현한 해결 방식</span><p>{data.solution}</p></article>
+          </div>
         </section>
         <section>
-          <p class="section-kicker">02 · APPROACH</p>
-          <h2>구현 방향</h2>
-          <p>{data.solution}</p>
-        </section>
-        <section>
-          <p class="section-kicker">03 · FEATURES</p>
-          <h2>주요 기능</h2>
+          <p class="section-kicker">02 · 플레이어와 운영자가 쓰는 기능</p>
+          <h2>실제로 무엇을 할 수 있나요?</h2>
           <ul class="feature-checks">
             {data.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
           </ul>
         </section>
         {(data.screenshots.length > 0 || data.sample) && (
           <section>
-            <p class="section-kicker">04 · SCREENSHOTS</p>
+            <p class="section-kicker">03 · 게임 화면</p>
             <h2>게임 화면</h2>
             <div class="screenshot-grid">
               {data.screenshots.length
@@ -82,20 +81,20 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
         )}
         {data.code && (
           <section>
-            <p class="section-kicker">05 · CODE</p>
+            <p class="section-kicker">04 · 구현 근거</p>
             <h2>선별 코드</h2>
             <div class="code-window">
               <div class="code-window__top"><span></span><span></span><span></span><b>{data.codeLanguage}</b></div>
               <pre><code>{data.code}</code></pre>
             </div>
-            {data.decision && <div class="decision-note"><b>기술적 판단</b><p>{data.decision}</p></div>}
+            {data.decision && <div class="decision-note"><b>이렇게 판단한 이유</b><p>{data.decision}</p></div>}
           </section>
         )}
         <div class="project-markdown"><Content /></div>
       </div>
       <aside class="project-sidebar">
         <div class="sidebar-card">
-          <p class="section-kicker">PROJECT INFO</p>
+          <p class="section-kicker">확인 정보</p>
           <dl>
             <div><dt>유형</dt><dd>{typeLabel}</dd></div>
             <div><dt>서버</dt><dd>{data.serverType}</dd></div>
@@ -104,8 +103,8 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
           </dl>
         </div>
         <div class="sidebar-contact">
-          <span>비슷한 기능이 필요하신가요?</span>
-          <h2>프로젝트를<br />함께 정리해 보세요.</h2>
+          <span>정확한 기능 이름을 몰라도 괜찮습니다.</span>
+          <h2>원하는 플레이를<br />이야기해 주세요.</h2>
           <button class="button button--primary" type="button" data-copy-discord>Discord 문의 ↗</button>
         </div>
       </aside>
@@ -113,8 +112,8 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 
     <nav class="project-next" aria-label="프로젝트 탐색">
       <div class="container">
-        <p>다른 작업물도 확인해 보세요.</p>
-        <a href="/#projects">전체 프로젝트 보기 <span aria-hidden="true">→</span></a>
+        <p>다른 실제 개발 사례도 확인해 보세요.</p>
+        <a href="/#real-work">실제 사례 전체 보기 <span aria-hidden="true">→</span></a>
       </div>
     </nav>
   </article>

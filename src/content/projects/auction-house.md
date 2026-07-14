@@ -24,7 +24,7 @@ code: |
       mailbox.deliver(buyer, listing.item());
   });
 decision: "검증, 결제, 상태 변경, 지급의 경계를 분명히 해 부분 실패를 추적하고 복구할 수 있게 하는 구조 예시입니다."
-order: 5
+order: 6
 ---
 
 > 실제 거래 UI와 데이터 구조에 맞춰 설명 및 이미지를 교체하세요.

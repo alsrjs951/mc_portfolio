@@ -21,7 +21,7 @@ const projects = defineCollection({
       src: image(),
       alt: z.string(),
     })).max(4).default([]),
-    thumbnail: image().optional(),
+    thumbnail: z.string().optional(),
     sourceUrl: z.url().optional(),
     demoUrl: z.url().optional(),
     codeLanguage: z.string().optional(),

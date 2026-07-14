@@ -98,6 +98,11 @@ img { max-width: 100%; display: block; }
 .project-card { min-width: 0; border: 1px solid var(--line-soft); background: var(--panel); transition: transform .25s, border-color .25s; }
 .project-card:hover { transform: translateY(-5px); border-color: #35433e; }
 .project-visual { height: 220px; position: relative; display: block; overflow: hidden; background: #0b1012; border-bottom: 1px solid var(--line-soft); }
+.project-thumbnail-wrap { position: absolute; inset: 0; }
+.project-thumbnail-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4, 8, 9, .02) 45%, rgba(4, 8, 9, .66) 100%); }
+.project-thumbnail { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease, filter .4s ease; }
+.project-card:hover .project-thumbnail { transform: scale(1.035); filter: saturate(1.08); }
+.visual-number--thumbnail { z-index: 2; color: rgba(232, 255, 244, .74); text-shadow: 0 2px 18px rgba(0, 0, 0, .8); }
 .visual-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(55, 72, 66, .2) 1px, transparent 1px), linear-gradient(90deg, rgba(55, 72, 66, .2) 1px, transparent 1px); background-size: 28px 28px; }
 .visual-grid::before { content: ''; position: absolute; inset: 15% 12%; border: 1px solid rgba(59, 229, 139, .25); background: linear-gradient(135deg, rgba(59, 229, 139, .08), transparent); }
 .visual-grid--skript::before { border-color: rgba(119, 230, 208, .26); background: linear-gradient(135deg, rgba(119, 230, 208, .09), transparent); }

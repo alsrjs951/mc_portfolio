@@ -19,6 +19,7 @@ stack: ["Java 21", "Paper API", "FastAsyncWorldEdit", "MySQL", "HikariCP", "Mave
 minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["FastAsyncWorldEdit", "MythicMobs (선택)", "ItemsAdder (선택)"]
+thumbnail: "../../assets/projects/butcher-instance.png"
 order: 0
 ---
 

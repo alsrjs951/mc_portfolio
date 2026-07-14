@@ -13,7 +13,6 @@ const { data } = project;
 const { Content } = await render(project);
 const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 const hasBody = (project.body ?? '').trim().length > 0;
-const codeSectionNumber = data.screenshots.length > 0 ? '04' : '03';
 ---
 
 <BaseLayout title={`${data.title} — EPA Development`} description={data.summary} canonicalPath={`/projects/${project.id}/`}>
@@ -71,17 +70,6 @@ const codeSectionNumber = data.screenshots.length > 0 ? '04' : '03';
                 </figure>
               ))}
             </div>
-          </section>
-        )}
-        {data.code && (
-          <section>
-            <p class="section-kicker">{codeSectionNumber} · {data.sample ? '구조 설계 예시' : '구현 근거'}</p>
-            <h2>{data.sample ? '핵심 처리 예시' : '선별 코드'}</h2>
-            <div class="code-window">
-              <div class="code-window__top"><span></span><span></span><span></span><b>{data.codeLanguage}</b></div>
-              <pre><code>{data.code}</code></pre>
-            </div>
-            {data.decision && <div class="decision-note"><b>{data.sample ? '설계 기준' : '이렇게 판단한 이유'}</b><p>{data.decision}</p></div>}
           </section>
         )}
         {hasBody && <div class="project-markdown"><Content /></div>}

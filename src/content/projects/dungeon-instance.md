@@ -16,16 +16,5 @@ minecraftVersions: ["1.21+"]
 serverType: "Paper"
 dependencies: []
 thumbnail: "/images/dungeon-instance-concept.jpg"
-codeLanguage: "kotlin"
-code: |
-  fun transition(next: DungeonState) {
-      check(next in state.allowedTransitions) {
-          "Invalid transition: $state -> $next"
-      }
-      state.onExit(this)
-      state = next
-      state.onEnter(this)
-  }
-decision: "상태 변경 경로를 한곳으로 제한하면 예상하지 못한 중복 보상이나 종료되지 않는 세션을 줄이고 테스트 가능한 구조를 만들 수 있습니다."
 order: 4
 ---

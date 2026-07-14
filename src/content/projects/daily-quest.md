@@ -16,15 +16,5 @@ minecraftVersions: ["1.20+", "1.21+"]
 serverType: "Paper / Spigot"
 dependencies: ["Skript", "SkBee"]
 thumbnail: "/images/daily-quest-concept.jpg"
-codeLanguage: "skript"
-code: |
-  function claimDailyQuest(p: player):
-      set {_id} to uuid of {_p}
-      if {quest::claimed::%{_id}%} is true:
-          send "&c이미 보상을 받았습니다." to {_p}
-          stop
-      set {quest::claimed::%{_id}%} to true
-      give {_p} 3 diamond
-decision: "보상 지급보다 먼저 수령 상태를 기록해 중복 실행 위험을 줄입니다. 저장 실패와 보상 지급 실패가 발생했을 때의 복구 정책도 함께 결정합니다."
 order: 5
 ---

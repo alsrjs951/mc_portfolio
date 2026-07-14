@@ -16,14 +16,5 @@ minecraftVersions: ["1.20+"]
 serverType: "Paper"
 dependencies: ["Vault"]
 thumbnail: "/images/auction-house-concept.jpg"
-codeLanguage: "java"
-code: |
-  return transaction.execute(listingId, listing -> {
-      if (!listing.isAvailable()) throw new SoldException();
-      economy.withdraw(buyer, listing.price());
-      listing.markSoldTo(buyer.getUniqueId());
-      mailbox.deliver(buyer, listing.item());
-  });
-decision: "검증, 결제, 상태 변경, 지급의 경계를 분명히 나누면 부분 실패를 추적하고 안전하게 복구할 수 있습니다."
 order: 6
 ---

@@ -16,14 +16,5 @@ minecraftVersions: ["1.19+", "1.20+"]
 serverType: "Paper / Spigot"
 dependencies: ["Skript"]
 thumbnail: "/images/server-utility-concept.jpg"
-codeLanguage: "skript"
-code: |
-  command /점검공지 <timespan>:
-      permission: epa.admin.maintenance
-      trigger:
-          set {maintenance::remaining} to arg-1
-          broadcast "&a점검까지 %arg-1% 남았습니다."
-          startMaintenanceTimer()
-decision: "운영자 권한, 입력값 검증과 중복 타이머 차단을 같은 실행 흐름에서 확인해 반복 업무의 실수를 줄입니다."
 order: 7
 ---

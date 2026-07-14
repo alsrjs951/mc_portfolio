@@ -16,16 +16,5 @@ minecraftVersions: ["1.20+", "1.21+"]
 serverType: "Paper"
 dependencies: ["Vault (선택)"]
 thumbnail: "/images/server-core-concept.jpg"
-codeLanguage: "java"
-code: |
-  public CompletableFuture<Profile> load(UUID playerId) {
-      return repository.find(playerId)
-          .thenApply(profile -> cache.put(playerId, profile))
-          .exceptionally(error -> {
-              logger.warn("Profile load failed: {}", playerId, error);
-              return Profile.fallback(playerId);
-          });
-  }
-decision: "메인 스레드에서 데이터베이스 I/O를 수행하지 않고, 조회 실패가 서버 전체 장애로 이어지지 않도록 복구 가능한 기본 흐름을 둡니다."
 order: 3
 ---

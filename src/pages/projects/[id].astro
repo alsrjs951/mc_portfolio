@@ -12,6 +12,8 @@ const { project } = Astro.props;
 const { data } = project;
 const { Content } = await render(project);
 const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
+const hasBody = (project.body ?? '').trim().length > 0;
+const codeSectionNumber = data.screenshots.length > 0 ? '04' : '03';
 ---
 
 <BaseLayout title={`${data.title} — EPA Development`} description={data.summary} canonicalPath={`/projects/${project.id}/`}>
@@ -22,7 +24,7 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
         <a class="back-link" href={data.sample ? '/#projects' : '/#real-work'}>← {data.sample ? '설계 예시' : '실제 개발 사례'}</a>
         <div class="project-hero__meta">
           <span class:list={['type-badge', `type-badge--${data.type}`]}>{typeLabel}</span>
-          <span class:list={['case-badge case-badge--detail', { 'case-badge--sample': data.sample }]}>{data.sample ? '설계 예시 · 실제 납품 사례 아님' : '실제 구현 사례'}</span>
+          <span class:list={['case-badge case-badge--detail', { 'case-badge--sample': data.sample }]}>{data.sample ? '구현 가능 범위 · 설계 예시' : '실제 구현 사례'}</span>
         </div>
         <h1>{data.title}</h1>
         <p>{data.summary}</p>
@@ -44,11 +46,11 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
       <div class="project-content">
         <section class="project-overview">
           <p class="section-kicker">01 · 한눈에 이해하기</p>
-          <h2>이 시스템은 무엇을 해결했나요?</h2>
+          <h2>{data.sample ? '이 시스템은 무엇을 해결하나요?' : '이 시스템은 무엇을 해결했나요?'}</h2>
           <div class="overview-flow">
-            <article><span>서버에서 겪던 문제</span><p>{data.problem}</p></article>
+            <article><span>{data.sample ? '예상되는 운영 문제' : '서버에서 겪던 문제'}</span><p>{data.problem}</p></article>
             <div aria-hidden="true">→</div>
-            <article><span>구현한 해결 방식</span><p>{data.solution}</p></article>
+            <article><span>{data.sample ? '권장 설계 방향' : '구현한 해결 방식'}</span><p>{data.solution}</p></article>
           </div>
         </section>
         <section>
@@ -58,39 +60,31 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
             {data.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
           </ul>
         </section>
-        {(data.screenshots.length > 0 || data.sample) && (
+        {data.screenshots.length > 0 && (
           <section>
             <p class="section-kicker">03 · 게임 화면</p>
             <h2>게임 화면</h2>
             <div class="screenshot-grid">
-              {data.screenshots.length
-                ? data.screenshots.map((screenshot) => (
-                    <figure class="project-screenshot">
-                      <Image src={screenshot.src} alt={screenshot.alt} widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 760px" loading="lazy" />
-                    </figure>
-                  ))
-                : [1, 2, 3].map((number) => (
-                    <div class="screenshot-placeholder">
-                      <span>{String(number).padStart(2, '0')}</span>
-                      <div aria-hidden="true"></div>
-                      <p>실제 게임 스크린샷으로 교체</p>
-                    </div>
-                  ))}
+              {data.screenshots.map((screenshot) => (
+                <figure class="project-screenshot">
+                  <Image src={screenshot.src} alt={screenshot.alt} widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 760px" loading="lazy" />
+                </figure>
+              ))}
             </div>
           </section>
         )}
         {data.code && (
           <section>
-            <p class="section-kicker">04 · 구현 근거</p>
-            <h2>선별 코드</h2>
+            <p class="section-kicker">{codeSectionNumber} · {data.sample ? '구조 설계 예시' : '구현 근거'}</p>
+            <h2>{data.sample ? '핵심 처리 예시' : '선별 코드'}</h2>
             <div class="code-window">
               <div class="code-window__top"><span></span><span></span><span></span><b>{data.codeLanguage}</b></div>
               <pre><code>{data.code}</code></pre>
             </div>
-            {data.decision && <div class="decision-note"><b>이렇게 판단한 이유</b><p>{data.decision}</p></div>}
+            {data.decision && <div class="decision-note"><b>{data.sample ? '설계 기준' : '이렇게 판단한 이유'}</b><p>{data.decision}</p></div>}
           </section>
         )}
-        <div class="project-markdown"><Content /></div>
+        {hasBody && <div class="project-markdown"><Content /></div>}
       </div>
       <aside class="project-sidebar">
         <div class="sidebar-card">
@@ -112,8 +106,8 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 
     <nav class="project-next" aria-label="프로젝트 탐색">
       <div class="container">
-        <p>다른 실제 개발 사례도 확인해 보세요.</p>
-        <a href="/#real-work">실제 사례 전체 보기 <span aria-hidden="true">→</span></a>
+        <p>{data.sample ? '다른 구현 가능 범위도 확인해 보세요.' : '다른 실제 개발 사례도 확인해 보세요.'}</p>
+        <a href={data.sample ? '/#projects' : '/#real-work'}>{data.sample ? '설계 예시 전체 보기' : '실제 사례 전체 보기'} <span aria-hidden="true">→</span></a>
       </div>
     </nav>
   </article>

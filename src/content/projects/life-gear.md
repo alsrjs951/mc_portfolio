@@ -1,5 +1,5 @@
 ---
-title: "SageGear — 생활 장비 성장 시스템"
+title: "생활 장비 성장 시스템"
 type: "plugin"
 featured: true
 sample: false
@@ -20,12 +20,13 @@ stack: ["Java 21", "Paper API", "PDC", "Maven", "JUnit 5"]
 minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["ItemsAdder", "Vault", "Citizens (선택)"]
+thumbnail: "/images/life-gear-growth.jpg"
 order: 2
 ---
 
 ## 일반 도구에서 전문 장비로
 
-SageGear는 운영 중인 Minecraft 서버의 채광, 농사, 도축, 낚시 도구를 하나의 성장 체계로 연결하기 위해 개발한 장비 시스템 플러그인입니다. 단순히 아이템에 인챈트를 추가하는 데서 그치지 않고 **각성부터 전문력 생성, 등급 상승, 주문서 강화, 손상과 복구, 소유자 귀속까지 장비의 전체 생명주기**를 구현했습니다.
+이 시스템은 운영 중인 Minecraft 서버의 채광, 농사, 도축, 낚시 도구를 하나의 성장 체계로 연결하기 위해 개발한 장비 시스템 플러그인입니다. 단순히 아이템에 인챈트를 추가하는 데서 그치지 않고 **각성부터 전문력 생성, 등급 상승, 주문서 강화, 손상과 복구, 소유자 귀속까지 장비의 전체 생명주기**를 구현했습니다.
 
 미각성 도구에 각성석을 사용해 성공하면 장비가 플레이어에게 귀속되고 용도에 맞는 전문 능력과 초기 등급을 얻습니다.
 

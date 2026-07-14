@@ -96,10 +96,6 @@ img { display: block; max-width: 100%; }
 .section-index { position: absolute; left: -47px; top: 1px; color: #879186; font: 10px var(--mono); }
 .section-heading h2, .language-intro h2, .process-intro h2, .faq-grid h2 { margin: 10px 0 0; font-size: clamp(38px, 4.3vw, 55px); line-height: 1.12; letter-spacing: -.055em; }
 .section-heading > p { margin: 0 0 4px; color: var(--muted); font-size: 13px; line-height: 1.8; text-align: right; }
-.heading-note { display: flex; align-items: center; gap: 16px; max-width: 430px; padding: 17px 19px; border: 1px solid var(--line); background: var(--white); }
-.heading-note p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
-.heading-note b { color: var(--ink); }
-.verified-mark { width: 33px; aspect-ratio: 1; flex: 0 0 auto; display: grid; place-items: center; color: var(--dark); background: var(--lime); font: 700 13px var(--mono); }
 
 .work-section { background: var(--paper); }
 .featured-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
@@ -306,7 +302,6 @@ img { display: block; max-width: 100%; }
   .section-heading { align-items: flex-start; flex-direction: column; margin-bottom: 35px; }
   .section-heading > p { text-align: left; }
   .section-index { position: static; display: block; margin-bottom: 6px; }
-  .heading-note { max-width: none; }
   .featured-grid, .concept-grid { grid-template-columns: 1fr; }
   .language-grid, .process-grid, .faq-grid { grid-template-columns: 1fr; gap: 45px; }
   .translation-list article { grid-template-columns: 1fr 24px 1fr; }

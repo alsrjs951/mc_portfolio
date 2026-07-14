@@ -20,7 +20,7 @@ minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["FastAsyncWorldEdit", "MythicMobs (선택)", "ItemsAdder (선택)"]
 thumbnail: "/images/butcher-instance.webp"
-order: 0
+order: 1
 ---
 
 ## 인스턴스의 전체 생명주기

@@ -24,7 +24,7 @@ code: |
           broadcast "&a점검까지 %arg-1% 남았습니다."
           startMaintenanceTimer()
 decision: "운영자 권한, 입력값 검증, 중복 타이머 방지를 실제 구현에서 함께 적용해야 하는 흐름을 보여주는 샘플입니다."
-order: 5
+order: 6
 ---
 
 > 공개 전 실제 사용한 운영 도구의 기능과 화면으로 교체하세요.

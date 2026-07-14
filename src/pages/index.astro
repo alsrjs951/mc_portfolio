@@ -1,0 +1,177 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((project) => project.data.featured).slice(0, 3);
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="hero-noise" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> MINECRAFT DEVELOPMENT PARTNER</div>
+        <h1>서버의 아이디어를<br /><em>안정적인 코드</em>로<br />구현합니다.</h1>
+        <p class="hero-description">
+          플러그인과 Skript를 설계하고, 오래 운영할 수 있도록 다듬습니다.<br class="desktop-only" />
+          필요한 기능을 정확히 이해하는 것부터 시작합니다.
+        </p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#projects">작업물 보기 <span aria-hidden="true">↓</span></a>
+          <button class="button button--secondary" type="button" data-copy-discord>
+            Discord로 문의하기 <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+        <ul class="hero-services" aria-label="주요 서비스">
+          <li><span>01</span> 플러그인 개발</li>
+          <li><span>02</span> Skript 개발</li>
+          <li><span>03</span> 유지보수 · 최적화</li>
+        </ul>
+      </div>
+      <div class="hero-console" aria-label="EPA Development 개발 원칙">
+        <div class="console-top"><span></span><span></span><span></span><b>epa@development:~</b></div>
+        <div class="console-body">
+          <p><span class="prompt">$</span> ./build-your-server</p>
+          <p class="console-muted">요구사항 분석 중...</p>
+          <div class="console-step"><span>✓</span><div><b>Purpose first</b><small>기능보다 목적부터 이해합니다.</small></div></div>
+          <div class="console-step"><span>✓</span><div><b>Stable by design</b><small>예외와 운영 환경까지 고려합니다.</small></div></div>
+          <div class="console-step"><span>✓</span><div><b>Clear handoff</b><small>설정과 사용법을 명확히 전달합니다.</small></div></div>
+          <p><span class="prompt">›</span> <span class="typing">ready for your idea_</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true"><span></span> SCROLL TO EXPLORE</div>
+  </section>
+
+  <aside class="sample-notice" aria-label="샘플 콘텐츠 안내">
+    <div class="container">
+      <span>CONTENT NOTE</span>
+      <p>현재 작업물은 레이아웃 확인용 샘플입니다. 실제 프로젝트명·설명·스크린샷·코드로 교체하면 바로 공개할 수 있습니다.</p>
+    </div>
+  </aside>
+
+  <section class="section featured-section" aria-labelledby="featured-title">
+    <div class="container">
+      <div class="section-heading">
+        <div><span class="section-index">01</span><p class="section-kicker">SELECTED WORK</p><h2 id="featured-title">대표 작업물</h2></div>
+        <p>문제를 어떻게 해석하고, 어떤 기준으로 구현했는지<br />프로젝트의 핵심만 정리했습니다.</p>
+      </div>
+      <div class="featured-grid">
+        {featured.map((project, index) => <ProjectCard project={project} index={index} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section all-projects" id="projects" aria-labelledby="projects-title">
+    <div class="container">
+      <div class="section-heading section-heading--filters">
+        <div><span class="section-index">02</span><p class="section-kicker">ALL PROJECTS</p><h2 id="projects-title">전체 작업물</h2></div>
+        <div class="filter-group" role="group" aria-label="프로젝트 종류 필터">
+          <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">전체</button>
+          <button class="filter-button" type="button" data-filter="plugin" aria-pressed="false">플러그인</button>
+          <button class="filter-button" type="button" data-filter="skript" aria-pressed="false">Skript</button>
+        </div>
+      </div>
+      <div class="projects-grid" data-projects-grid>
+        {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
+      </div>
+      <p class="filter-empty" data-filter-empty hidden>이 유형의 프로젝트가 아직 없습니다.</p>
+    </div>
+  </section>
+
+  <section class="section services-section" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="section-heading">
+        <div><span class="section-index">03</span><p class="section-kicker">WHAT I DO</p><h2 id="services-title">제공 서비스</h2></div>
+        <p>단순히 동작하는 코드를 넘어,<br />실제 서버 운영에 맞는 결과물을 만듭니다.</p>
+      </div>
+      <div class="service-list">
+        <article><span class="service-number">01</span><div class="service-icon" aria-hidden="true">&#123; &#125;</div><div><h3>플러그인 개발</h3><p>서버만의 시스템을 Java 기반 플러그인으로 구현합니다. 구조 설계부터 명령어, 데이터 관리, 외부 연동까지 다룹니다.</p></div><ul><li>Paper / Spigot</li><li>Java / Kotlin</li><li>API 연동</li></ul></article>
+        <article><span class="service-number">02</span><div class="service-icon" aria-hidden="true">&gt;_</div><div><h3>Skript 개발</h3><p>빠른 적용이 필요한 콘텐츠와 운영 기능을 Skript로 구현합니다. 읽기 쉽고 수정 가능한 구조를 지향합니다.</p></div><ul><li>Skript</li><li>애드온 연동</li><li>콘텐츠 제작</li></ul></article>
+        <article><span class="service-number">03</span><div class="service-icon" aria-hidden="true">↻</div><div><h3>유지보수 · 최적화</h3><p>오류 원인을 추적하고 기존 코드를 정리합니다. 서버 부하와 운영 과정에서 생기는 문제를 함께 개선합니다.</p></div><ul><li>버그 수정</li><li>성능 개선</li><li>버전 대응</li></ul></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section process-section" id="process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-heading">
+        <div><span class="section-index">04</span><p class="section-kicker">PROCESS</p><h2 id="process-title">개발 진행 방식</h2></div>
+        <p>작은 기능도 기준을 먼저 맞춥니다.<br />진행 상황과 변경 내용을 투명하게 공유합니다.</p>
+      </div>
+      <ol class="process-list">
+        <li><span>01</span><div class="process-dot"></div><h3>상담</h3><p>Discord로 목적과<br />필요 기능을 확인합니다.</p></li>
+        <li><span>02</span><div class="process-dot"></div><h3>요구사항 정리</h3><p>기능 범위와 예외 상황,<br />일정과 견적을 정리합니다.</p></li>
+        <li><span>03</span><div class="process-dot"></div><h3>개발</h3><p>확장과 유지보수를 고려해<br />구조적으로 구현합니다.</p></li>
+        <li><span>04</span><div class="process-dot"></div><h3>테스트</h3><p>실제 서버 환경을 기준으로<br />기능과 예외를 확인합니다.</p></li>
+        <li><span>05</span><div class="process-dot"></div><h3>전달</h3><p>설치 파일과 설정 방법,<br />사용법을 함께 전달합니다.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section stack-section" aria-labelledby="stack-title">
+    <div class="container stack-grid">
+      <div>
+        <span class="section-index">05</span><p class="section-kicker">TECHNICAL BASE</p><h2 id="stack-title">기술 역량</h2>
+        <p class="stack-copy">프로젝트 성격에 맞는 기술을 선택하고, 운영자가 이해할 수 있는 설정과 문서를 제공합니다.</p>
+      </div>
+      <div class="stack-panels">
+        <article><span>LANGUAGE</span><div class="stack-tags"><b>Java</b><b>Kotlin</b><b>Skript</b></div></article>
+        <article><span>PLATFORM</span><div class="stack-tags"><b>Paper</b><b>Spigot</b><b>Bukkit API</b></div></article>
+        <article><span>DATA & TOOLS</span><div class="stack-tags"><b>MySQL</b><b>SQLite</b><b>Git</b><b>Gradle</b></div></article>
+        <article><span>MINECRAFT VERSION</span><div class="version-row"><b>1.16+</b><p>프로젝트 요구사항에 따라<br />지원 범위를 협의합니다.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section faq-section" aria-labelledby="faq-title">
+    <div class="container faq-grid">
+      <div><span class="section-index">06</span><p class="section-kicker">FAQ</p><h2 id="faq-title">자주 묻는 질문</h2><p>궁금한 내용이 더 있다면<br />Discord에서 편하게 물어보세요.</p></div>
+      <div class="faq-list">
+        <details open><summary>의뢰 비용은 어떻게 정해지나요?<span aria-hidden="true">＋</span></summary><p>기능의 범위, 데이터 저장 방식, 외부 연동, 지원 버전과 일정에 따라 달라집니다. 요구사항을 확인한 뒤 작업 범위와 견적을 함께 안내합니다.</p></details>
+        <details><summary>Skript와 플러그인 중 무엇이 적합한가요?<span aria-hidden="true">＋</span></summary><p>빠른 콘텐츠 적용에는 Skript가, 복잡한 시스템·성능·확장성이 중요할 때는 플러그인이 유리합니다. 상담 단계에서 목적에 맞는 방식을 제안합니다.</p></details>
+        <details><summary>기존 플러그인이나 Skript도 수정할 수 있나요?<span aria-hidden="true">＋</span></summary><p>소스 코드와 사용 권한이 확인되는 경우 구조 분석 후 수정 가능합니다. 서버 로그와 재현 방법이 있으면 더 정확하게 범위를 판단할 수 있습니다.</p></details>
+        <details><summary>개발 완료 후 유지보수도 가능한가요?<span aria-hidden="true">＋</span></summary><p>완료된 작업의 오류 수정과 버전 대응은 범위를 협의해 진행합니다. 전달 시 설정과 사용 방법도 함께 안내합니다.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" aria-labelledby="contact-title">
+    <div class="contact-grid-bg" aria-hidden="true"></div>
+    <div class="container contact-inner">
+      <p class="section-kicker">START A PROJECT</p>
+      <h2 id="contact-title">만들고 싶은 기능이<br />있으신가요?</h2>
+      <p>아이디어가 아직 구체적이지 않아도 괜찮습니다.<br />필요한 기능과 서버 환경을 함께 정리해 드립니다.</p>
+      <button class="button button--contact" type="button" data-copy-discord>
+        <span class="discord-logo" aria-hidden="true">D</span><span><small>DISCORD ID</small>__epa__</span><b>복사하고 문의하기 ↗</b>
+      </button>
+      <small class="contact-note">버튼을 누르면 Discord ID가 복사됩니다.</small>
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const cards = document.querySelectorAll<HTMLElement>('[data-project-card]');
+    const empty = document.querySelector<HTMLElement>('[data-filter-empty]');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter ?? 'all';
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-pressed', String(active));
+        });
+        let visible = 0;
+        cards.forEach((card) => {
+          const show = filter === 'all' || card.dataset.type === filter;
+          card.hidden = !show;
+          if (show) visible += 1;
+        });
+        if (empty) empty.hidden = visible > 0;
+      });
+    });
+  </script>
+</BaseLayout>

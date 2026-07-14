@@ -1,0 +1,117 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({ params: { id: project.id }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
+---
+
+<BaseLayout title={`${data.title} — EPA Development`} description={data.summary} canonicalPath={`/projects/${project.id}/`}>
+  <article class="project-detail">
+    <header class="project-hero">
+      <div class="project-hero-grid" aria-hidden="true"></div>
+      <div class="container">
+        <a class="back-link" href="/#projects">← 전체 작업물</a>
+        <div class="project-hero__meta">
+          <span class:list={['type-badge', `type-badge--${data.type}`]}>{typeLabel}</span>
+          {data.sample && <span class="sample-badge">실제 콘텐츠로 교체 필요</span>}
+        </div>
+        <h1>{data.title}</h1>
+        <p>{data.summary}</p>
+        <div class="project-facts">
+          <div><span>PLATFORM</span><b>{data.serverType}</b></div>
+          <div><span>VERSION</span><b>{data.minecraftVersions.join(', ')}</b></div>
+          <div><span>STACK</span><b>{data.stack.join(' · ')}</b></div>
+        </div>
+        {(data.sourceUrl || data.demoUrl) && (
+          <div class="project-links">
+            {data.demoUrl && <a href={data.demoUrl} target="_blank" rel="noreferrer">시연 보기 ↗</a>}
+            {data.sourceUrl && <a href={data.sourceUrl} target="_blank" rel="noreferrer">공개 코드 보기 ↗</a>}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <div class="container project-layout">
+      <div class="project-content">
+        <section>
+          <p class="section-kicker">01 · CONTEXT</p>
+          <h2>개발 배경</h2>
+          <p>{data.problem}</p>
+        </section>
+        <section>
+          <p class="section-kicker">02 · APPROACH</p>
+          <h2>구현 방향</h2>
+          <p>{data.solution}</p>
+        </section>
+        <section>
+          <p class="section-kicker">03 · FEATURES</p>
+          <h2>주요 기능</h2>
+          <ul class="feature-checks">
+            {data.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
+          </ul>
+        </section>
+        <section>
+          <p class="section-kicker">04 · SCREENSHOTS</p>
+          <h2>게임 화면</h2>
+          <div class="screenshot-grid">
+            {data.screenshots.length
+              ? data.screenshots.map((screenshot) => (
+                  <figure class="project-screenshot">
+                    <Image src={screenshot.src} alt={screenshot.alt} widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 760px" loading="lazy" />
+                  </figure>
+                ))
+              : [1, 2, 3].map((number) => (
+                  <div class="screenshot-placeholder">
+                    <span>{String(number).padStart(2, '0')}</span>
+                    <div aria-hidden="true"></div>
+                    <p>실제 게임 스크린샷으로 교체</p>
+                  </div>
+                ))}
+          </div>
+        </section>
+        <section>
+          <p class="section-kicker">05 · CODE</p>
+          <h2>선별 코드</h2>
+          <div class="code-window">
+            <div class="code-window__top"><span></span><span></span><span></span><b>{data.codeLanguage}</b></div>
+            <pre><code>{data.code}</code></pre>
+          </div>
+          <div class="decision-note"><b>기술적 판단</b><p>{data.decision}</p></div>
+        </section>
+        <div class="project-markdown"><Content /></div>
+      </div>
+      <aside class="project-sidebar">
+        <div class="sidebar-card">
+          <p class="section-kicker">PROJECT INFO</p>
+          <dl>
+            <div><dt>유형</dt><dd>{typeLabel}</dd></div>
+            <div><dt>서버</dt><dd>{data.serverType}</dd></div>
+            <div><dt>버전</dt><dd>{data.minecraftVersions.join(', ')}</dd></div>
+            <div><dt>의존성</dt><dd>{data.dependencies.length ? data.dependencies.join(', ') : '없음'}</dd></div>
+          </dl>
+        </div>
+        <div class="sidebar-contact">
+          <span>비슷한 기능이 필요하신가요?</span>
+          <h2>프로젝트를<br />함께 정리해 보세요.</h2>
+          <button class="button button--primary" type="button" data-copy-discord>Discord 문의 ↗</button>
+        </div>
+      </aside>
+    </div>
+
+    <nav class="project-next" aria-label="프로젝트 탐색">
+      <div class="container">
+        <p>다른 작업물도 확인해 보세요.</p>
+        <a href="/#projects">전체 프로젝트 보기 <span aria-hidden="true">→</span></a>
+      </div>
+    </nav>
+  </article>
+</BaseLayout>

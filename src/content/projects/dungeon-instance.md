@@ -1,0 +1,32 @@
+---
+title: "인스턴스 던전"
+type: "plugin"
+featured: true
+sample: true
+summary: "파티별 독립 공간과 전투 상태를 관리하는 인스턴스 콘텐츠 설계 예시입니다."
+problem: "여러 파티가 동시에 같은 던전을 이용하면 몬스터, 보상, 진행 단계가 서로 영향을 줄 수 있으며 이탈과 재접속 같은 예외도 처리해야 합니다."
+solution: "던전 한 판을 독립된 세션 객체로 모델링하고 상태 전이를 제한합니다. 참가자, 월드 자원, 타이머를 세션 생명주기에 묶어 종료 시 일괄 정리합니다."
+features:
+  - "파티별 독립 던전 세션과 단계 관리"
+  - "입장, 사망, 이탈, 재접속 예외 처리"
+  - "보스 패턴과 웨이브 스케줄링"
+  - "세션 종료 시 엔티티와 작업 안전 정리"
+stack: ["Kotlin", "Paper API", "Gradle"]
+minecraftVersions: ["1.21+"]
+serverType: "Paper"
+dependencies: []
+codeLanguage: "kotlin"
+code: |
+  fun transition(next: DungeonState) {
+      check(next in state.allowedTransitions) {
+          "Invalid transition: $state -> $next"
+      }
+      state.onExit(this)
+      state = next
+      state.onEnter(this)
+  }
+decision: "상태 변경 경로를 한곳으로 제한하면 예상하지 못한 중복 보상이나 종료되지 않는 세션을 줄이고 테스트 가능한 구조를 만들 수 있습니다."
+order: 2
+---
+
+> 실제 던전 스크린샷과 공개 가능한 코드로 교체하면 사례 페이지가 완성됩니다.

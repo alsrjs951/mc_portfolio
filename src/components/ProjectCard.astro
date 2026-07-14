@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index?: number;
+}
+
+const { project, index = 0 } = Astro.props;
+const { data } = project;
+const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
+const number = String(index + 1).padStart(2, '0');
+---
+
+<article class="project-card" data-project-card data-type={data.type}>
+  <a class="project-visual" href={`/projects/${project.id}/`} aria-label={`${data.title} 상세 보기`}>
+    <div class:list={['visual-grid', `visual-grid--${data.type}`]} aria-hidden="true">
+      <span class="visual-number">{number}</span>
+      <span class="code-line code-line--one"></span>
+      <span class="code-line code-line--two"></span>
+      <span class="code-line code-line--three"></span>
+      <span class="visual-cube"></span>
+    </div>
+    {data.sample && <span class="sample-ribbon">교체용 샘플</span>}
+  </a>
+  <div class="project-card__content">
+    <div class="project-card__meta">
+      <span class:list={['type-badge', `type-badge--${data.type}`]}>{typeLabel}</span>
+      <span>{data.minecraftVersions.join(' · ')}</span>
+    </div>
+    <h3><a href={`/projects/${project.id}/`}>{data.title}</a></h3>
+    <p>{data.summary}</p>
+    <div class="tag-list" aria-label="기술 스택">
+      {data.stack.slice(0, 3).map((item) => <span>{item}</span>)}
+    </div>
+    <a class="card-link" href={`/projects/${project.id}/`}>
+      프로젝트 살펴보기 <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</article>

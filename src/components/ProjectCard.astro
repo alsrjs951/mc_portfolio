@@ -4,11 +4,10 @@ import type { CollectionEntry } from 'astro:content';
 interface Props {
   project: CollectionEntry<'projects'>;
   index?: number;
-  proof?: string;
   compact?: boolean;
 }
 
-const { project, index = 0, proof, compact = false } = Astro.props;
+const { project, index = 0, compact = false } = Astro.props;
 const { data } = project;
 const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 const number = String(index + 1).padStart(2, '0');
@@ -39,16 +38,9 @@ const number = String(index + 1).padStart(2, '0');
     </div>
     <h3><a href={`/projects/${project.id}/`}>{data.title}</a></h3>
     <p class="project-summary">{data.summary}</p>
-    {!compact && (
-      <div class="project-story">
-        <div><span>문제</span><p>{data.problem}</p></div>
-        <div><span>해결</span><p>{data.solution}</p></div>
-      </div>
-    )}
-    {proof && <p class="project-proof"><span aria-hidden="true">✓</span>{proof}</p>}
     {compact && <div class="tag-list">{data.stack.slice(0, 3).map((item) => <span>{item}</span>)}</div>}
     <a class="card-link" href={`/projects/${project.id}/`}>
-      {data.sample ? '설계 내용 보기' : '문제와 구현 과정 보기'} <span aria-hidden="true">↗</span>
+      {data.sample ? '설계 내용 보기' : '상세 구현 사례 보기'} <span aria-hidden="true">↗</span>
     </a>
   </div>
 </article>

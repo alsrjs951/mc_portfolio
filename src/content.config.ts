@@ -23,9 +23,9 @@ const projects = defineCollection({
     })).max(4).default([]),
     sourceUrl: z.url().optional(),
     demoUrl: z.url().optional(),
-    codeLanguage: z.string(),
-    code: z.string(),
-    decision: z.string(),
+    codeLanguage: z.string().optional(),
+    code: z.string().optional(),
+    decision: z.string().optional(),
     order: z.number(),
   }),
 });

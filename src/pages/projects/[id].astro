@@ -59,34 +59,38 @@ const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
             {data.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
           </ul>
         </section>
-        <section>
-          <p class="section-kicker">04 · SCREENSHOTS</p>
-          <h2>게임 화면</h2>
-          <div class="screenshot-grid">
-            {data.screenshots.length
-              ? data.screenshots.map((screenshot) => (
-                  <figure class="project-screenshot">
-                    <Image src={screenshot.src} alt={screenshot.alt} widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 760px" loading="lazy" />
-                  </figure>
-                ))
-              : [1, 2, 3].map((number) => (
-                  <div class="screenshot-placeholder">
-                    <span>{String(number).padStart(2, '0')}</span>
-                    <div aria-hidden="true"></div>
-                    <p>실제 게임 스크린샷으로 교체</p>
-                  </div>
-                ))}
-          </div>
-        </section>
-        <section>
-          <p class="section-kicker">05 · CODE</p>
-          <h2>선별 코드</h2>
-          <div class="code-window">
-            <div class="code-window__top"><span></span><span></span><span></span><b>{data.codeLanguage}</b></div>
-            <pre><code>{data.code}</code></pre>
-          </div>
-          <div class="decision-note"><b>기술적 판단</b><p>{data.decision}</p></div>
-        </section>
+        {(data.screenshots.length > 0 || data.sample) && (
+          <section>
+            <p class="section-kicker">04 · SCREENSHOTS</p>
+            <h2>게임 화면</h2>
+            <div class="screenshot-grid">
+              {data.screenshots.length
+                ? data.screenshots.map((screenshot) => (
+                    <figure class="project-screenshot">
+                      <Image src={screenshot.src} alt={screenshot.alt} widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 760px" loading="lazy" />
+                    </figure>
+                  ))
+                : [1, 2, 3].map((number) => (
+                    <div class="screenshot-placeholder">
+                      <span>{String(number).padStart(2, '0')}</span>
+                      <div aria-hidden="true"></div>
+                      <p>실제 게임 스크린샷으로 교체</p>
+                    </div>
+                  ))}
+            </div>
+          </section>
+        )}
+        {data.code && (
+          <section>
+            <p class="section-kicker">05 · CODE</p>
+            <h2>선별 코드</h2>
+            <div class="code-window">
+              <div class="code-window__top"><span></span><span></span><span></span><b>{data.codeLanguage}</b></div>
+              <pre><code>{data.code}</code></pre>
+            </div>
+            {data.decision && <div class="decision-note"><b>기술적 판단</b><p>{data.decision}</p></div>}
+          </section>
+        )}
         <div class="project-markdown"><Content /></div>
       </div>
       <aside class="project-sidebar">

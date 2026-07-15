@@ -2,7 +2,8 @@
 title: "도축장 인스턴스 시스템"
 type: "plugin"
 featured: true
-sample: false
+implementationType: "real"
+automatedTestCount: 5
 summary: "플레이어마다 독립된 공간을 실시간으로 준비하고, 성장·보상·복구까지 한 세션으로 관리하는 도축 콘텐츠입니다."
 problem: "공용 도축장은 이용자가 몰릴수록 공간과 몬스터를 두고 경쟁하게 되고, 단순 반복 사냥으로 느껴지기 쉽습니다. 동시에 입장 실패, 강제 종료, 엔티티 유실 같은 운영 예외에서도 이용권과 보상, 공간 점유 상태가 어긋나지 않아야 했습니다."
 solution: "도축장 한 판을 독립된 세션으로 모델링하고, FAWE 기반 방 생성부터 슬롯 배정, 입장 검증, 목표 진행, 보상 지급, 공간 회수까지 전체 생명주기를 관리했습니다. 비용이 큰 생성·저장 작업은 비동기로 처리하되 게임 객체 접근은 메인 스레드로 분리했습니다."
@@ -19,6 +20,19 @@ stack: ["Java 21", "Paper API", "FastAsyncWorldEdit", "MySQL", "HikariCP", "Mave
 minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["FastAsyncWorldEdit", "MythicMobs (선택)", "ItemsAdder (선택)"]
+results:
+  - label: "자동 테스트"
+    value: "5개 통과"
+    description: "성장 단계, 보상 보정과 콘텐츠 연동 로직을 검증합니다."
+  - label: "주요 기능"
+    value: "개인 인스턴스"
+    description: "공간 생성부터 목표 진행, 보상과 회수까지 세션 단위로 관리합니다."
+  - label: "운영 안정성"
+    value: "실패 시 자동 롤백"
+    description: "생성 실패와 접속 종료 시 이용 횟수와 점유 자원을 되돌립니다."
+  - label: "프로젝트 상태"
+    value: "실제 구현 완료"
+    description: "공개된 구현 설명과 자동 테스트 결과를 확인할 수 있습니다."
 thumbnail: "/images/butcher-instance.webp"
 order: 1
 ---

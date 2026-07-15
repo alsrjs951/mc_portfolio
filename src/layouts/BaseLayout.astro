@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { discordInviteUrl } from '../data/siteConfig.mjs';
 
 interface Props {
   title?: string;
@@ -52,10 +53,16 @@ const ogImage = new URL('/og-v3.png', site);
           <a href="/#real-work">실제 사례</a>
           <a href="/#trust">작업 기준</a>
           <a href="/#process">진행 방식</a>
-          <button class="discord-button discord-button--small" type="button" data-copy-discord>
+          <a
+            class="discord-button discord-button--small"
+            href={discordInviteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Discord 서버에서 개발 의뢰·견적 문의하기"
+          >
             <span class="status-dot" aria-hidden="true"></span>
             의뢰 · 견적 문의
-          </button>
+          </a>
         </nav>
       </div>
     </header>
@@ -70,53 +77,14 @@ const ogImage = new URL('/og-v3.png', site);
           <p>요구한 기능을, 운영 가능한 시스템으로.</p>
         </div>
         <div class="footer-meta">
-          <span>Discord</span>
-          <button type="button" class="text-copy" data-copy-discord>__epa__ 복사</button>
+          <span>Discord 서버</span>
+          <a class="footer-link" href={discordInviteUrl} target="_blank" rel="noopener noreferrer">서버 입장 ↗</a>
           <small>© {new Date().getFullYear()} EPA Development</small>
         </div>
       </div>
     </footer>
-    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
     <script is:inline>
       (() => {
-        const discordId = '__epa__';
-        const toast = document.querySelector('[data-toast]');
-        let timer;
-
-        const showToast = (message) => {
-          if (!toast) return;
-          toast.textContent = message;
-          toast.classList.add('is-visible');
-          window.clearTimeout(timer);
-          timer = window.setTimeout(() => toast.classList.remove('is-visible'), 3600);
-        };
-
-        const fallbackCopy = () => {
-          const input = document.createElement('input');
-          input.value = discordId;
-          input.setAttribute('readonly', '');
-          input.style.position = 'fixed';
-          input.style.opacity = '0';
-          document.body.appendChild(input);
-          input.select();
-          const copied = Reflect.get(document, 'execCommand').call(document, 'copy');
-          input.remove();
-          return copied;
-        };
-
-        document.querySelectorAll('[data-copy-discord]').forEach((button) => {
-          button.addEventListener('click', async () => {
-            try {
-              if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(discordId);
-              else if (!fallbackCopy()) throw new Error('copy failed');
-              showToast('Discord ID __epa__를 복사했습니다. 친구 추가 후 문의해 주세요.');
-            } catch {
-              showToast('복사하지 못했습니다. Discord ID __epa__를 직접 복사해 주세요.');
-              window.getSelection()?.selectAllChildren(button);
-            }
-          });
-        });
-
         const header = document.querySelector('[data-header]');
         const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 16);
         updateHeader();

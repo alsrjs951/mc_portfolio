@@ -2,7 +2,8 @@
 title: "회사 조직·경제 시스템"
 type: "plugin"
 featured: true
-sample: false
+implementationType: "real"
+automatedTestCount: 125
 summary: "권한, 공동 자산, 생산, 계약, 실적과 랭킹을 하나의 흐름으로 연결한 플레이어 회사 운영 플러그인입니다."
 problem: "여러 플레이어가 함께 성장하는 회사 콘텐츠는 단순한 길드 기능만으로 완성되지 않습니다. 공동 재화와 아이템을 안전하게 관리하고, 역할별 권한과 생산·계약·보상 흐름을 일관되게 연결하면서 장기간 운영 중 발생하는 오작동과 분쟁도 추적할 수 있어야 했습니다."
 solution: "회사 운영을 하나의 서비스 도메인으로 모델링하고 직급·권한, 금고·창고, 공장, 성장, 주간 계약, 실적 도전과 랭킹을 전용 GUI에서 연결했습니다. UI와 핵심 로직 양쪽에서 권한과 상태를 검증하고, 모든 주요 자산 변동을 기록하며, 다른 서버 콘텐츠는 서비스 API와 이벤트를 통해 느슨하게 연동했습니다."
@@ -20,6 +21,19 @@ stack: ["Java 21", "Paper API", "MySQL", "HikariCP", "FastAsyncWorldEdit", "Mult
 minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["FastAsyncWorldEdit", "Multiverse-Core", "ItemsAdder"]
+results:
+  - label: "자동 테스트"
+    value: "125개 통과"
+    description: "권한, 자산, 생산과 계약 흐름의 정상·예외 상황을 검증합니다."
+  - label: "주요 기능"
+    value: "조직·경제 통합"
+    description: "직급과 권한, 금고·창고, 공장, 계약과 랭킹을 한 흐름으로 연결했습니다."
+  - label: "운영 안정성"
+    value: "자산 변동 기록"
+    description: "중요한 공동 자산 변경을 기록하고 UI와 서비스 계층에서 권한을 검증합니다."
+  - label: "프로젝트 상태"
+    value: "실제 구현 완료"
+    description: "공개된 구현 설명과 자동 테스트 결과를 확인할 수 있습니다."
 thumbnail: "/images/company-organization.jpg"
 order: 0
 ---

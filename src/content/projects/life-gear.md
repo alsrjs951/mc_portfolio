@@ -2,7 +2,8 @@
 title: "생활 장비 성장 시스템"
 type: "plugin"
 featured: true
-sample: false
+implementationType: "real"
+automatedTestCount: 33
 summary: "채광·농사·도축·낚시 도구를 각성부터 강화, 손상, 복구, 귀속까지 하나의 생명주기로 연결한 장비 시스템입니다."
 problem: "생활 콘텐츠마다 별도의 도구와 능력치를 관리하면 성장 규칙이 분산되고, 이름이나 설명 문자열에 의존한 아이템 데이터는 설정 변경과 사용자 조작에 취약합니다. 확률형 강화의 피로도를 줄이면서도 여러 콘텐츠가 같은 장비 상태를 안전하게 공유할 수 있는 공통 기반이 필요했습니다."
 solution: "Paper의 Persistent Data Container를 기준 데이터로 삼아 장비의 각성, 등급, 전문력, 강화 단계, 손상과 소유권을 일관되게 관리했습니다. 확률과 천장을 결합한 성장 구조, 실제 콘텐츠에 반영되는 능력치, 대장장이 복구 GUI와 귀속 장비 이동 통제를 하나의 시스템으로 구현하고 서비스 API와 이벤트를 통해 다른 콘텐츠와 연결했습니다."
@@ -20,6 +21,19 @@ stack: ["Java 21", "Paper API", "PDC", "Maven", "JUnit 5"]
 minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["ItemsAdder", "Vault", "Citizens (선택)"]
+results:
+  - label: "자동 테스트"
+    value: "33개 통과"
+    description: "장비 성장, 상태 전이와 외부 시스템 연동 규칙을 검증합니다."
+  - label: "주요 기능"
+    value: "장비 생명주기"
+    description: "각성, 성장, 손상, 복구와 소유자 귀속을 하나의 데이터 규칙으로 관리합니다."
+  - label: "운영 안정성"
+    value: "PDC 기준 데이터"
+    description: "표시 문자열이 아닌 전용 데이터로 설정 변경과 아이템 이동 상황을 처리합니다."
+  - label: "프로젝트 상태"
+    value: "실제 구현 완료"
+    description: "공개된 구현 설명과 자동 테스트 결과를 확인할 수 있습니다."
 thumbnail: "/images/life-gear-growth.jpg"
 order: 2
 ---

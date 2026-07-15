@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
-import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { discordInviteUrl } from '../../data/siteConfig.mjs';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -13,6 +13,7 @@ const { data } = project;
 const { Content } = await render(project);
 const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 const hasBody = (project.body ?? '').trim().length > 0;
+const isReal = data.implementationType === 'real';
 ---
 
 <BaseLayout title={`${data.title} — EPA Development`} description={data.summary} canonicalPath={`/projects/${project.id}/`}>
@@ -20,10 +21,10 @@ const hasBody = (project.body ?? '').trim().length > 0;
     <header class="project-hero">
       <div class="project-hero-grid" aria-hidden="true"></div>
       <div class="container">
-        <a class="back-link" href={data.sample ? '/#projects' : '/#real-work'}>← {data.sample ? '설계 예시' : '실제 개발 사례'}</a>
+        <a class="back-link" href={isReal ? '/#real-work' : '/#projects'}>← {isReal ? '실제 개발 사례' : '설계 예시'}</a>
         <div class="project-hero__meta">
           <span class:list={['type-badge', `type-badge--${data.type}`]}>{typeLabel}</span>
-          <span class:list={['case-badge case-badge--detail', { 'case-badge--sample': data.sample }]}>{data.sample ? '구현 가능 범위 · 설계 예시' : '실제 구현 사례'}</span>
+          <span class:list={['case-badge case-badge--detail', { 'case-badge--sample': !isReal }]}>{isReal ? '실제 구현 사례' : '구현 가능 범위 · 설계 예시'}</span>
         </div>
         <h1>{data.title}</h1>
         <p>{data.summary}</p>
@@ -43,41 +44,77 @@ const hasBody = (project.body ?? '').trim().length > 0;
 
     <div class="container project-layout">
       <div class="project-content">
-        <section class="project-overview">
-          <p class="section-kicker">01 · 한눈에 이해하기</p>
-          <h2>{data.sample ? '이 시스템은 무엇을 해결하나요?' : '이 시스템은 무엇을 해결했나요?'}</h2>
-          <div class="overview-flow">
-            <article><span>{data.sample ? '예상되는 운영 문제' : '서버에서 겪던 문제'}</span><p>{data.problem}</p></article>
-            <div aria-hidden="true">→</div>
-            <article><span>{data.sample ? '권장 설계 방향' : '구현한 해결 방식'}</span><p>{data.solution}</p></article>
-          </div>
-        </section>
-        <section>
-          <p class="section-kicker">02 · 플레이어와 운영자가 쓰는 기능</p>
-          <h2>실제로 무엇을 할 수 있나요?</h2>
-          <ul class="feature-checks">
-            {data.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
-          </ul>
-        </section>
-        {data.screenshots.length > 0 && (
-          <section>
-            <p class="section-kicker">03 · 게임 화면</p>
-            <h2>게임 화면</h2>
-            <div class="screenshot-grid">
-              {data.screenshots.map((screenshot) => (
-                <figure class="project-screenshot">
-                  <Image src={screenshot.src} alt={screenshot.alt} widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, 760px" loading="lazy" />
+        {data.results.length > 0 && (
+          <section class="project-results" aria-labelledby="project-results-title">
+            <p class="section-kicker">01 · 핵심 결과</p>
+            <h2 id="project-results-title">기술 문서보다 먼저 보는 결과</h2>
+            <div class="result-grid">
+              {data.results.map((result) => (
+                <article>
+                  <span>{result.label}</span>
+                  <strong>{result.value}</strong>
+                  {result.description && <p>{result.description}</p>}
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+        {data.media.length > 0 && (
+          <section class="project-media" aria-labelledby="project-media-title">
+            <p class="section-kicker">02 · 공개 가능한 화면</p>
+            <h2 id="project-media-title">프로젝트 미디어</h2>
+            <div class="media-grid">
+              {data.media.map((media) => (
+                <figure>
+                  {media.type === 'image' ? (
+                    <img src={media.src} alt={media.alt} width="1200" height="675" loading="lazy" decoding="async" />
+                  ) : (
+                    <video controls preload="metadata" poster={media.poster} aria-label={media.alt}>
+                      <source src={media.src} />
+                    </video>
+                  )}
+                  {media.caption && <figcaption>{media.caption}</figcaption>}
                 </figure>
               ))}
             </div>
           </section>
         )}
-        {hasBody && <div class="project-markdown"><Content /></div>}
+        <section class="project-overview">
+          <p class="section-kicker">{data.results.length > 0 ? '03' : '01'} · 비개발자용 요약</p>
+          <h2>{isReal ? '이 시스템은 무엇을 해결했나요?' : '이 시스템은 무엇을 해결하나요?'}</h2>
+          <div class="overview-flow">
+            <article><span>{isReal ? '서버에서 겪던 문제' : '예상되는 운영 문제'}</span><p>{data.problem}</p></article>
+            <div aria-hidden="true">→</div>
+            <article><span>{isReal ? '구현한 해결 방식' : '권장 설계 방향'}</span><p>{data.solution}</p></article>
+          </div>
+        </section>
+        <section>
+          <p class="section-kicker">핵심 구현 내용</p>
+          <h2>실제로 무엇을 할 수 있나요?</h2>
+          <ul class="feature-checks">
+            {data.features.map((feature) => <li><span aria-hidden="true">✓</span>{feature}</li>)}
+          </ul>
+        </section>
+        {isReal && (
+          <section class="stability-summary">
+            <p class="section-kicker">안정성 및 예외 처리</p>
+            <h2>운영 중 생길 상황까지 고려했습니다.</h2>
+            <p>{data.solution}</p>
+            {data.automatedTestCount !== undefined && <strong>공개된 자동 테스트 {data.automatedTestCount}개</strong>}
+          </section>
+        )}
+        {hasBody && (
+          <details class="technical-details">
+            <summary>기술 상세 보기 <span aria-hidden="true">＋</span></summary>
+            <div class="project-markdown"><Content /></div>
+          </details>
+        )}
       </div>
       <aside class="project-sidebar">
         <div class="sidebar-card">
           <p class="section-kicker">확인 정보</p>
           <dl>
+            <div><dt>사례 구분</dt><dd>{isReal ? '실제 구현' : '설계 예시'}</dd></div>
             <div><dt>유형</dt><dd>{typeLabel}</dd></div>
             <div><dt>서버</dt><dd>{data.serverType}</dd></div>
             <div><dt>버전</dt><dd>{data.minecraftVersions.join(', ')}</dd></div>
@@ -87,15 +124,15 @@ const hasBody = (project.body ?? '').trim().length > 0;
         <div class="sidebar-contact">
           <span>비슷한 시스템의 개발이 필요하신가요?</span>
           <h2>요구사항과 서버 환경을<br />정리해 보내주세요.</h2>
-          <button class="button button--primary" type="button" data-copy-discord>개발 의뢰 · 견적 문의 ↗</button>
+          <a class="button button--primary" href={discordInviteUrl} target="_blank" rel="noopener noreferrer">개발 의뢰 · 견적 문의 ↗</a>
         </div>
       </aside>
     </div>
 
     <nav class="project-next" aria-label="프로젝트 탐색">
       <div class="container">
-        <p>{data.sample ? '다른 구현 가능 범위도 확인해 보세요.' : '다른 실제 개발 사례도 확인해 보세요.'}</p>
-        <a href={data.sample ? '/#projects' : '/#real-work'}>{data.sample ? '설계 예시 전체 보기' : '실제 사례 전체 보기'} <span aria-hidden="true">→</span></a>
+        <p>{isReal ? '다른 실제 개발 사례도 확인해 보세요.' : '다른 구현 가능 범위도 확인해 보세요.'}</p>
+        <a href={isReal ? '/#real-work' : '/#projects'}>{isReal ? '실제 사례 전체 보기' : '설계 예시 전체 보기'} <span aria-hidden="true">→</span></a>
       </div>
     </nav>
   </article>

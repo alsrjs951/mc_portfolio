@@ -2,7 +2,8 @@
 title: "플레이어 거래소 시스템"
 type: "plugin"
 featured: true
-sample: false
+implementationType: "real"
+automatedTestCount: 5
 summary: "상품 탐색부터 동시 구매 제어, 경제 정산, 시세 분석과 만료 상품 반환까지 플레이어 간 거래의 전체 흐름을 구현한 거래소 플러그인입니다."
 problem: "같은 매물에 구매 요청이 동시에 들어오거나 경제 정산과 데이터베이스 기록 중 일부만 성공하면 아이템이 복제되고 플레이어 간 잔액이 어긋날 수 있습니다. 판매자가 오프라인이거나 상품이 만료된 상황에서도 물품과 재화를 잃지 않도록 전체 거래 흐름을 복구 가능하게 만들어야 했습니다."
 solution: "매물 상태를 조건부로 변경해 한 구매자만 거래를 계속하도록 하고, 상태 변경과 거래 기록은 데이터베이스 트랜잭션으로 묶었습니다. 외부 경제 작업이 중간에 실패하면 이미 처리한 지급과 수수료를 반대 거래로 보상하며, 만료 상품은 고유 전달 키와 상태 전이를 사용해 영구 우편함으로 안전하게 반환하도록 구성했습니다."
@@ -23,6 +24,19 @@ stack: ["Java 21", "Paper API 1.21", "MySQL", "HikariCP", "JDBC Transaction", "P
 minecraftVersions: ["1.21"]
 serverType: "Paper"
 dependencies: ["Vault", "서버 경제 브리지", "영구 우편함 시스템", "전문 장비 시스템 (선택)", "Citizens (선택)"]
+results:
+  - label: "자동 테스트"
+    value: "5개 통과"
+    description: "정상 정산, 중간 실패 보상과 만료 정책을 검증합니다."
+  - label: "주요 기능"
+    value: "거래 전체 흐름"
+    description: "검색과 구매, 정산, 시세 분석, 만료 상품 반환까지 구현했습니다."
+  - label: "운영 안정성"
+    value: "중복 구매·손실 방지"
+    description: "조건부 상태 변경, 트랜잭션과 반대 거래로 실패 상황을 복구합니다."
+  - label: "프로젝트 상태"
+    value: "실제 구현 완료"
+    description: "공개된 구현 설명과 자동 테스트 결과를 확인할 수 있습니다."
 thumbnail: "/images/auction-house-concept.jpg"
 order: 3
 ---

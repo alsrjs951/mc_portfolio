@@ -11,9 +11,10 @@ const { project, index = 0, compact = false } = Astro.props;
 const { data } = project;
 const typeLabel = data.type === 'plugin' ? 'PLUGIN' : 'SKRIPT';
 const number = String(index + 1).padStart(2, '0');
+const isReal = data.implementationType === 'real';
 ---
 
-<article class:list={['project-card', { 'project-card--compact': compact, 'project-card--real': !data.sample }]} data-project-card data-type={data.type}>
+<article class:list={['project-card', { 'project-card--compact': compact, 'project-card--real': isReal }]} data-project-card data-type={data.type}>
   <a class="project-visual" href={`/projects/${project.id}/`} aria-label={`${data.title} 상세 보기`}>
     {data.thumbnail ? (
       <div class="project-thumbnail-wrap">
@@ -29,7 +30,7 @@ const number = String(index + 1).padStart(2, '0');
         <span class="visual-cube"></span>
       </div>
     )}
-    <span class:list={['case-badge', { 'case-badge--sample': data.sample }]}>{data.sample ? '설계 예시' : '실제 구현'}</span>
+    <span class:list={['case-badge', { 'case-badge--sample': !isReal }]}>{isReal ? '실제 구현' : '설계 예시'}</span>
   </a>
   <div class="project-card__content">
     <div class="project-card__meta">
@@ -40,7 +41,7 @@ const number = String(index + 1).padStart(2, '0');
     <p class="project-summary">{data.summary}</p>
     {compact && <div class="tag-list">{data.stack.slice(0, 3).map((item) => <span>{item}</span>)}</div>}
     <a class="card-link" href={`/projects/${project.id}/`}>
-      {data.sample ? '설계 내용 보기' : '상세 구현 사례 보기'} <span aria-hidden="true">↗</span>
+      {isReal ? '상세 구현 사례 보기' : '설계 내용 보기'} <span aria-hidden="true">↗</span>
     </a>
   </div>
 </article>
